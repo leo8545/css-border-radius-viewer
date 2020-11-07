@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', e => {
 	const getCodeBtn = document.querySelector('#get-code');
 	const linkAllBtn = document.querySelector('#link-all');
 
-
 	let t = {
 		'top-right': 0,
 		'top-left': 0,
@@ -18,7 +17,7 @@ document.addEventListener('DOMContentLoaded', e => {
 			const id = btn.id;
 			if (value) {
 				if (!linkAllBtn.checked) {
-					textarea.style.cssText += `border-${id}-radius: ${value}px`;					
+					textarea.style.cssText += `border-${id}-radius: ${value}px`;		
 				} else {
 					textarea.style.cssText += `border-radius: ${value}px`;
 				}
@@ -32,19 +31,14 @@ document.addEventListener('DOMContentLoaded', e => {
 		})
 	})
 
-	if (linkAllBtn.checked) {
-		textarea.style.cssText = `border-radius: ${document.querySelector('#top-right').value}px;`;
-	}
-
 	linkAllBtn.addEventListener('change', e => {
+		textarea.textContent = '';
 		if (e.target.checked) {
-			borderRadiusButtons.forEach(b => {
-				if (b.value) {
-					[...borderRadiusButtons].map(_b => {
-						_b.value = b.value;
-					})
-				}
+			let c = [...borderRadiusButtons].filter(b => b.value);
+			[...borderRadiusButtons].map(_b => {
+				_b.value = c[0].value;
 			})
+			textarea.style.borderRadius = `${c[0].value}px`;
 		}
 	})
 
@@ -54,7 +48,7 @@ document.addEventListener('DOMContentLoaded', e => {
 			textarea.textContent = `border-radius: ${document.querySelector('#top-right').value}px;`;
 		} else {
 			Object.keys(t).forEach((v) => {
-				textarea.textContent += `border-${v}-radius: ${t[v]}px;\n`;
+				textarea.textContent += `border-${v}-radius: ${document.querySelector(`#${v}`).value}px;\n`;
 			})
 		}
 	})
